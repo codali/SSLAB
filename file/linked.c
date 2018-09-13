@@ -1,6 +1,6 @@
 void linked(){
-  struct block{
+/*  struct block{
     char fname[15];
-    
-  }
+
+  }*/
 }
