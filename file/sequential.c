@@ -1,5 +1,5 @@
 void sequential() {
-  int fileNum=0,sb[10],nb[10],block[100],endBlock;;
+  int fileNum=0,sb[10],nb[10],block[100],endBlock;
   sb[0]=0;
   printf("Enter the number of files : ");
   scanf("%d",&fileNum);
