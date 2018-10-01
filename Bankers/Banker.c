@@ -33,6 +33,7 @@ void main()
 	i = 0;
 	printf("Execution order ");
 	ex = 0;
+	int z= 0;
 	while(1) 
 	{
 		for (j = 0; j < 3; ++j) 
@@ -62,8 +63,19 @@ void main()
 		++i;
 		if ( i == 4)
 			i = 0;
+		z++;
+		if(z == 20)
+		{
+			printf("Unsafe state");
+			break;
+		}
 	}
 	printf("\n");
+	printf("Do you want to continue 1");
+	int a;
+	scanf("%d",&a);
+	if(a == 1)
+		main();
 }
 
 
