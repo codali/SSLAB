@@ -61,6 +61,7 @@ void hierarichal() {
 
 void directory() {
   while (1) {
+    system("clear");
     pwd();
     printf(" 1.MKDIR\n" );
     printf(" 2.RMDIR\n" );
