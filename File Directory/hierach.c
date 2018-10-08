@@ -10,6 +10,13 @@ struct dir {
 char location[10][10],name[10];
 int lastLoc = 0;
 
+void pwd() {
+  printf("\nAddress : ");
+  for(i = 0; i <= lastLoc ; i++)
+    printf("/%s",location[i]);
+  printf("\n");
+}
+
 void directory();
 int dirSearch(struct dir *loc){
   for (i = 0 ; i < 10 ; i++) {
@@ -47,115 +54,114 @@ void hierarichal() {
   root -> lastf = 0;
   root -> lastd = 0;
   root -> prev = NULL;
-  directory(root);
+  current = root;
+  directory();
 }
 
-void directory(struct dir *loc) {
-  printf("\nAddress : ");
-  for(i = 0; i <= lastLoc ; i++)
-    printf("%s/",location[i]);
-  printf("\n");
+void directory() {
+  while (1) {
+    pwd();
+    printf(" 1.MKDIR\n" );
+    printf(" 2.RMDIR\n" );
+    printf(" 3.TOUCH\n");
+    printf(" 4.RM\n");
+    printf(" 5.ls\n");
+    printf(" 6.Search\n");
+    printf(" 7.CD\n");
+    printf(" 8.CD ..\n");
+    printf(" 0.Exit\n");
+    printf("\tCHOOSE :");
+    int opt,i;
+    scanf("%d", &opt);
 
-  printf(" 1.MKDIR\n" );
-  printf(" 2.RMDIR\n" );
-  printf(" 3.TOUCH\n");
-  printf(" 4.RM\n");
-  printf(" 5.ls\n");
-  printf(" 6.Search\n");
-  printf(" 7.CD\n");
-  printf(" 8.CD ..\n");
-  printf(" 0.Exit\n");
-  printf("\tCHOOSE :");
-  int opt,i;
-  scanf("%d", &opt);
-
-  switch (opt) {
-    case 1:
-      printf("Directory Name :");
-      scanf("%s", name);
-      if(dirSearch(loc) == -1) {
-        ptr = alloc(loc);
-        strcpy(loc -> dname[loc -> lastd], name);
-        loc -> lastd++;
-        loc -> subdir[loc -> lastd] = ptr;
-        printf("MKDIR Success\n");
-      }
-      else
-        printf("Directory already present\n" );
-      directory(loc);
-      break;
-
-    case 2:
-      printf("Directory Name :");
-      scanf("%s", name);
-      if(dirSearch(loc) != -1) {
-        i = dirSearch(loc);
-        free(loc -> subdir[i]);
-        strcpy(loc -> dname[i], "");
-        printf("Deleted\n");
-      }
-      else
-        printf("Directory not found\n" );
-      break;
-
-    case 3:
-      printf("File Name :");
-      scanf("%s", name);
-      if(fileSearch(loc) == -1) {
-        strcpy(loc -> fname[loc -> lastf], name);
-        loc -> lastf++;
-        printf("TOUCH Success\n");
-      }
-      else
-        printf("File already present\n" );
-      break;
-
-    case 4:
-      printf("File Name :");
-      scanf("%s", name);
-      if(fileSearch(loc) != -1) {
-        i = fileSearch(loc);
-        strcpy(loc -> fname[i], "");
-        printf("Deleted\n");
-      }
-      else
-        printf("File Not Found\n" );
-      break;
-
-      case 5:
-        printf("\n");
-        for (i = 0 ; i < 10 ; i++) {
-          printf("%s%s%s\t",KGRN,loc->dname[i],KNRM);
-        }
-        printf("\n");
-        for (i = 0 ; i < 10 ; i++) {
-          printf("%s\t",loc->fname[i]);
-        }
-        break;
-
-      case 6:
-        printf("Under Construction\n");
-        break;
-
-      case 7:
+    switch (opt) {
+      case 1:
         printf("Directory Name :");
         scanf("%s", name);
-        if(dirSearch(loc) != -1) {
-          i = dirSearch(loc);
-          strcpy(location[i], loc -> dname[i]);
-          lastLoc++;
-          directory(loc -> subdir[i]);
+        if(dirSearch(current) == -1) {
+          ptr = alloc(current);
+          strcpy(current -> dname[current -> lastd], name);
+          current -> subdir[current -> lastd] = ptr;
+          current -> lastd++;
+          printf("MKDIR Success\n");
         }
         else
-          printf("No Such Dir\n" );
+          printf("Directory already present\n" );
         break;
-      case 8:
-        if( loc -> prev != NULL )
-          loc = loc -> prev;
-          lastLoc--;
+
+      case 2:
+        printf("Directory Name :");
+        scanf("%s", name);
+        if(dirSearch(current) != -1) {
+          i = dirSearch(current);
+          free(current -> subdir[i]);
+          strcpy(current -> dname[i], "");
+          printf("Deleted\n");
+        }
+        else
+          printf("Directory not found\n" );
         break;
-      case 0:exit(0);break;
-      default: printf("Bro WTF u Just Entered\n");directory(loc);
+
+      case 3:
+        printf("File Name :");
+        scanf("%s", name);
+        if(fileSearch(current) == -1) {
+          strcpy(current -> fname[current -> lastf], name);
+          current -> lastf++;
+          printf("TOUCH Success\n");
+        }
+        else
+          printf("File already present\n" );
+        break;
+
+      case 4:
+        printf("File Name :");
+        scanf("%s", name);
+        if(fileSearch(current) != -1) {
+          i = fileSearch(current);
+          strcpy(current -> fname[i], "");
+          printf("Deleted\n");
+        }
+        else
+          printf("File Not Found\n" );
+        break;
+
+        case 5:
+          printf("\n");
+          for (i = 0 ; i < current -> lastd ; i++) {
+            printf("%s%s%s\t",KGRN,current->dname[i],KNRM);
+          }
+          printf("\n");
+          for (i = 0 ; i < current -> lastf ; i++) {
+            printf("%s\t",current->fname[i]);
+          }
+          break;
+
+        case 6:
+          printf("Under Construction\n");
+          break;
+
+        case 7:
+          printf("Directory Name :");
+          scanf("%s", name);
+          if(dirSearch(current) != -1) {
+            i = dirSearch(current);
+            printf("%d",i);
+            strcpy(location[i], current -> dname[i]);
+            lastLoc++;
+            current = current -> subdir[i];
+          }
+          else
+            printf("No Such Dir\n" );
+          break;
+        case 8:
+          if( current -> prev != NULL ) {
+            current = current -> prev;
+            lastLoc--;
+          }
+          break;
+        case 0:exit(0);break;
+        default: printf("Bro WTF u Just Entered\n");
+    }
   }
-  directory(loc);
 }
