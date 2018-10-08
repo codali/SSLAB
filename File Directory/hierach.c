@@ -49,12 +49,13 @@ struct dir *alloc(struct dir *loc){
 }
 
 void hierarichal() {
-  if(root == NULL)
+  if(root == NULL) {
     root = (struct dir*) malloc (sizeof(struct dir));
-  root -> lastf = 0;
-  root -> lastd = 0;
-  root -> prev = NULL;
-  current = root;
+    root -> lastf = 0;
+    root -> lastd = 0;
+    root -> prev = NULL;
+    current = root;
+  }
   directory();
 }
 
@@ -147,7 +148,7 @@ void directory() {
           if(dirSearch(current) != -1) {
             i = dirSearch(current);
             printf("%d",i);
-            strcpy(location[i], current -> dname[i]);
+            strcpy(location[lastLoc], current -> dname[i]);
             lastLoc++;
             current = current -> subdir[i];
           }
