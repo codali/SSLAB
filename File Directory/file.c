@@ -7,7 +7,7 @@
 #include "hierach.c"
 
 void main() {
-
+  system("clear");
   printf("File Directory Structures\n" );
   printf(" 1. Single Level \n");
   printf(" 2. Two Level \n");
