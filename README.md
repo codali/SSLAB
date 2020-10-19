@@ -15,8 +15,8 @@
  
  <h3>To be implemented </h3>
  <ul>
-    <li>Pging techniques of memory management</li>
-    <li>Pge replacement algorithms</li>
+     <li>Paging techniques of memory management</li>
+    <li>Page replacement algorithms</li>
     <li>Producer-consumer problem using semaphores</li>
     <li>Dining philosopher’s problem</li>
     <li>Single pass assembler</li>
